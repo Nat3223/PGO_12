@@ -81,7 +81,6 @@ import java.util.stream.Collectors;
                     .filter(order -> order.status() != OrderStatus.CANCELLED)
                     .map(Order::id)
                     .toList();
-            return List.of();
         }
 
         static List<Order> ordersAbove(List<Order> orders, double minValue) {
@@ -90,7 +89,7 @@ import java.util.stream.Collectors;
                     .filter(order -> order.totalValue() > minValue)
                     .sorted(Comparator.comparingDouble(Order::totalValue).reversed())
                     .toList();
-            return List.of();
+
         }
 
         static List<String> uniqueCustomerNames(List<Order> orders) {
@@ -100,7 +99,7 @@ import java.util.stream.Collectors;
                     .distinct()
                     .sorted()
                     .toList();
-            return List.of();
+
         }
 
         static List<String> soldProductNames(List<Order> orders) {
@@ -112,7 +111,7 @@ import java.util.stream.Collectors;
                     .distinct()
                     .sorted()
                     .toList();
-            return List.of();
+
         }
 
         static double totalRevenue(List<Order> orders) {
@@ -121,7 +120,7 @@ import java.util.stream.Collectors;
                     .filter(order -> order.status() != OrderStatus.CANCELLED)
                     .mapToDouble(Order::totalValue)
                     .sum();
-            return 0.0;
+
         }
 
         static OptionalDouble averageDeliveredOrderValue(List<Order> orders) {
@@ -130,7 +129,7 @@ import java.util.stream.Collectors;
                     .filter(order -> order.status() == OrderStatus.DELIVERED)
                     .mapToDouble(Order::totalValue)
                     .average();
-            return OptionalDouble.empty();
+
         }
 
         static Map<OrderStatus, Long> countByStatus(List<Order> orders) {
