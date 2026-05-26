@@ -164,17 +164,27 @@ import java.util.stream.Collectors;
 
         static Map<Boolean, List<Order>> partitionActiveOrdersByValue(List<Order> orders, double threshold) {
             // TODO: task 10
-            return Map.of();
+            return orders.stream()
+                    .filter(order -> order.status() != OrderStatus.CANCELLED)
+                    .collect(Collectors.partitioningBy(order -> order.totalValue() >= threshold
+                    ));
+
         }
 
         static Optional<Order> mostExpensiveDeliveredOrder(List<Order> orders) {
             // TODO: task 11
-            return Optional.empty();
+            return orders.stream()
+                    .filter(order -> order.status() == OrderStatus.DELIVERED)
+                    .max(Comparator.comparingDouble(Order::totalValue));
+
         }
 
         static DoubleSummaryStatistics activeOrderStatistics(List<Order> orders) {
             // TODO: extra task
-            return new DoubleSummaryStatistics();
+            return orders.stream()
+                    .filter(order -> order.status() != OrderStatus.CANCELLED)
+                    .mapToDouble(Order::totalValue)
+                    .summaryStatistics();
         }
 
         public static void main(String[] args) {
@@ -194,4 +204,4 @@ import java.util.stream.Collectors;
             System.out.println(activeOrderStatistics(orders));
         }
     }
-}
+
